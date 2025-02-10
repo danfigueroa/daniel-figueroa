@@ -1,50 +1,45 @@
-# React + TypeScript + Vite
+# My Personal Interactive Terminal Site
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is my personal website, designed to simulate an interactive terminal similar to those found in macOS and Linux. The interface is carefully crafted with inspiration from the **Shades of Purple** theme and the **Powerlevel10k** aesthetic, utilizing striking colors such as characteristic yellow along with complementary tones for an elegant and modern design.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **React**: Library for building user interfaces.
+-   **TypeScript**: A superset of JavaScript that adds static typing for enhanced robustness and code quality.
+-   **Vite**: Fast build tool and development server with support for HMR (Hot Module Replacement).
+-   **CSS**: Used for styling the terminal, with variables that define a color palette inspired by Shades of Purple.
 
-## Expanding the ESLint configuration
+## How to Run the Project
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Prerequisites**: Ensure you have [Node.js](https://nodejs.org/) installed.
+2. **Clone the repository**:
+    ```bash
+    git clone <YOUR_REPOSITORY_URL>
+    cd <PROJECT_NAME>
+    ```
+3. **Install dependencies**:
+    ```bash
+    npm install
+    ```
+4. **Start the development server**:
+    ```bash
+    npm run dev
+    ```
+5. **Access the project**: Open your browser and navigate to [http://localhost:3000](http://localhost:3000) (the address may vary based on configuration).
 
-- Configure the top-level `parserOptions` property like this:
+## Available Scripts
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+-   `npm run dev`: Starts the development server.
+-   `npm run build`: Builds the project for production.
+-   `npm run lint`: Runs ESLint for code analysis.
+-   `npm run preview`: Serves the production build for preview.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Project Purpose
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+This project was created to serve as my interactive online resume, showcasing my skills and experiences in an innovative way using a terminal interface.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Contributions
+
+Contributions are welcome! Feel free to open issues or submit pull requests for improvements.
+
+_This site is an example of how to combine modern design and technology to create a unique and interactive presentation._

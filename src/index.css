@@ -1,62 +1,156 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background: #282a36; /* Fundo Dracula */
-  color: #f8f8f2;      /* Texto padrão */
-  font-family: 'Fira Code', monospace;
-  font-size: 18px;
+/* Novas variáveis para o tema Shades of Purple */
+:root {
+    --background-color: #1e1e3f; /* Deep purple background */
+    --foreground-color: #ffffff; /* Pure white text */
+    --header-background: #1e1e3f; /* Header matches background */
+    --prompt-color: #c397d8; /* Base purple (not used directly) */
+    --accent-yellow: #ffff00; /* Bright yellow for accents */
+    --cursor-color: #ff6188; /* Cursor color */
+    --label-color: #f07178; /* Label color */
+    --scrollbar-track-color: #17173d; /* Darker purple for scrollbar track */
+    --scrollbar-thumb-color: #c397d8;
+    --success-green: #3ad900; /* Green color for success messages */
+    --command-blue: #75eaff; /* Light blue for command outputs */
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--background-color);
+    color: var(--foreground-color);
+    font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+    font-size: 18px;
 }
 
 /* Contêiner principal */
 .terminal-container {
-  display: flex;
-  flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Adiciona destaque à janela */
 }
 
 /* Barra no topo do terminal */
 .terminal-header {
-  background: #44475a; /* Tom mais claro que o fundo */
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
+    background: var(--header-background);
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--foreground-color);
+    font-size: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    letter-spacing: 1px;
 }
 
 /* Área rolável com o conteúdo do terminal */
 .terminal-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  box-sizing: border-box;
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    background: var(--background-color);
 }
 
-/* Prompt e cursor */
+/* Novo estilo para o prompt (mimicando o powerlevel10k) */
 .prompt {
-  color: #50fa7b;
+    font-weight: bold;
 }
 
+.prompt-user {
+    color: var(--accent-yellow);
+}
+
+.prompt-at {
+    color: var(--accent-yellow);
+}
+
+.prompt-location {
+    color: var(--accent-yellow);
+}
+
+.prompt-input {
+    padding: 0 0.5em;
+    background: transparent;
+    color: var(--foreground-color);
+    font-family: inherit;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.prompt-line {
+    display: flex;
+    align-items: center;
+}
+
+/* Cursor retangular maior */
 .cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1em;
-  background: #bd93f9;
-  vertical-align: bottom;
-  margin-left: 2px;
-  animation: blink 1s infinite alternate;
+    display: inline-block;
+    width: 10px;
+    height: 1em;
+    background: var(--cursor-color);
+    margin-left: 4px;
+    position: relative;
+    top: 1px;
+    animation: blink 0.8s infinite alternate;
 }
 
+/* Destaque para labels */
 .label {
-  color: #ff79c6;
-  font-weight: bold;
+    color: var(--accent-yellow);
+    font-weight: bold;
+}
+
+/* Label verde para comandos disponíveis */
+.success-label {
+    color: var(--success-green);
+    font-weight: bold;
 }
 
 @keyframes blink {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Melhorar a aparência das linhas com espaçamento adequado para UX/UI */
+.terminal-body div {
+    white-space: pre-wrap;
+    line-height: 1.6; /* Aumentado para melhor legibilidade */
+    margin-bottom: 0.8em; /* Espaçamento entre as linhas */
+}
+
+/* Scrollbar personalizada */
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-color);
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb-color);
+    border-radius: 4px;
+}
+
+/* Estilos para o currículo */
+.company {
+    color: var(--accent-yellow);
+    font-weight: bold;
+}
+
+.tech-category {
+    color: var(--accent-yellow);
+    font-weight: bold;
 }
