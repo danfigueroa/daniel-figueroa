@@ -3,7 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
-    "homepage": "https://danfigueroa.github.io/daniel-figueroa/",
+    "homepage": "https://danielfigueroa.dev",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
