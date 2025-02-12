@@ -256,11 +256,11 @@ body {
 
     .terminal-header {
         font-size: 16px;
-        padding: 8px 12px;
+        padding: 12px;
     }
 
     .terminal-body {
-        padding: 8px 12px;
+        padding: 12px;
     }
 
     .mac-buttons {
@@ -283,28 +283,36 @@ body {
     html,
     body {
         font-size: 14px;
+        height: 100%;
+        overflow: hidden;
     }
 
     .terminal-header {
-        font-size: 14px;
-        padding: 6px 10px;
+        font-size: 16px;
+        padding: 12px;
+        height: 48px;
     }
 
     .terminal-body {
-        padding: 6px 10px;
+        padding: 16px;
+        height: calc(100vh - 48px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
-    /* Ajusta o texto longo para não quebrar o layout */
     .terminal-body div {
         max-width: 100%;
         overflow-wrap: break-word;
         word-wrap: break-word;
         word-break: break-word;
+        font-size: 14px;
+        line-height: 1.6;
     }
 
-    /* Ajusta o prompt para telas pequenas */
     .prompt-line {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        font-size: 14px;
+        margin-top: 8px;
     }
 
     .terminal-container {
@@ -312,9 +320,38 @@ body {
         height: 100vh;
         margin: 0;
         border-radius: 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
     }
 
     .terminal-header {
         border-radius: 0;
+    }
+
+    .mac-buttons {
+        left: 8px;
+    }
+
+    .terminal-header {
+        font-size: 14px;
+    }
+
+    .terminal-body > div:not(:last-child) {
+        margin-bottom: 12px;
+    }
+
+    .cursor {
+        height: 16px;
+        top: 1px;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+        input,
+        textarea {
+            font-size: 16px;
+        }
     }
 }
