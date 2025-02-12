@@ -22,8 +22,8 @@ const translations = {
 export const Terminal: React.FC = () => {
     const [history, setHistory] = useState<Line[]>([])
     const [currentInput, setCurrentInput] = useState<string>('')
-
     const containerRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         // Ao iniciar, mostra a mensagem de boas-vindas em inglês
@@ -39,19 +39,19 @@ export const Terminal: React.FC = () => {
         }
     }, [history])
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Backspace') {
-            setCurrentInput((prev) => prev.slice(0, -1))
-            e.preventDefault()
+            return // Deixa o input handle o backspace naturalmente
         } else if (
             e.key.length === 1 &&
             !e.ctrlKey &&
             !e.metaKey &&
             !e.altKey
         ) {
-            setCurrentInput((prev) => prev + e.key)
+            return // Deixa o input handle o caractere naturalmente
         } else if (e.key === 'Enter') {
             executeCommand(currentInput.trim())
+            e.preventDefault()
         }
     }
 
@@ -101,8 +101,8 @@ export const Terminal: React.FC = () => {
     }
 
     const focusTerminal = () => {
-        if (containerRef.current) {
-            containerRef.current.focus()
+        if (inputRef.current) {
+            inputRef.current.focus()
         }
     }
 
@@ -123,12 +123,15 @@ export const Terminal: React.FC = () => {
                         aria-label="Expand"
                     ></button>
                 </div>
-                👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻
+                <div className="terminal-header-title">
+                    👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻
+                </div>
+                <div style={{ width: '88px' }}></div>{' '}
+                {/* Espaçador para centralizar o título */}
             </div>
             <div
                 className="terminal-body"
                 tabIndex={0}
-                onKeyDown={handleKeyDown}
                 ref={containerRef}
                 style={{ outline: 'none' }}
                 onClick={focusTerminal}
@@ -153,6 +156,18 @@ export const Terminal: React.FC = () => {
                     </span>
                     <span className="prompt-input">{currentInput}</span>
                     <span className="cursor"></span>
+                    <input
+                        ref={inputRef}
+                        type="text"
+                        className="mobile-input"
+                        value={currentInput}
+                        onChange={(e) => setCurrentInput(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                        autoCapitalize="none"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck="false"
+                    />
                 </div>
             </div>
         </div>

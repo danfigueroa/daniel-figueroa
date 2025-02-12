@@ -56,19 +56,31 @@ body {
 /* Barra no topo do terminal */
 .terminal-header {
     background: var(--header-background);
-    padding: 12px 16px;
-    text-align: center;
+    padding: 10px;
     font-weight: bold;
     color: var(--foreground-color);
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    letter-spacing: 1px;
+    letter-spacing: 0;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px 8px 0 0;
     user-select: none;
+}
+
+.terminal-header-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 600px; /* Limita a largura máxima */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
+    padding: 0 60px; /* Espaço para os botões */
 }
 
 /* Área rolável com o conteúdo do terminal */
@@ -205,12 +217,10 @@ body {
 .mac-buttons {
     position: absolute;
     left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
     display: flex;
     gap: 8px;
-    opacity: 0.9;
-    transition: opacity 0.2s ease;
+    align-items: center;
+    z-index: 1;
 }
 
 .terminal-container:hover .mac-buttons {
@@ -225,6 +235,9 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
+    min-width: 12px; /* Garante largura mínima */
+    min-height: 12px; /* Garante altura mínima */
+    padding: 0; /* Remove padding que pode deformar */
 }
 
 .mac-button:hover {
@@ -264,18 +277,27 @@ body {
     }
 
     .mac-buttons {
-        left: 12px;
+        gap: 6px;
+        margin-right: 12px;
     }
 
     .mac-button {
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
+        min-width: 8px;
+        min-height: 8px;
     }
 
     .terminal-container {
         width: 90%;
         height: 90vh;
         margin: 5vh auto;
+    }
+
+    .terminal-header-title {
+        font-size: 16px;
+        max-width: 100%;
+        padding: 0 50px;
     }
 }
 
@@ -288,9 +310,16 @@ body {
     }
 
     .terminal-header {
-        font-size: 16px;
-        padding: 12px;
-        height: 48px;
+        font-size: 14px;
+        padding: 8px 10px;
+        height: auto;
+        min-height: 32px;
+    }
+
+    .terminal-header-title {
+        font-size: 14px;
+        padding: 0 40px;
+        box-sizing: border-box;
     }
 
     .terminal-body {
@@ -332,11 +361,15 @@ body {
     }
 
     .mac-buttons {
-        left: 8px;
+        gap: 4px;
+        left: 10px;
     }
 
-    .terminal-header {
-        font-size: 14px;
+    .mac-button {
+        width: 6px;
+        height: 6px;
+        min-width: 6px;
+        min-height: 6px;
     }
 
     .terminal-body > div:not(:last-child) {
@@ -354,4 +387,28 @@ body {
             font-size: 16px;
         }
     }
+
+    /* Ajustes para melhor experiência com teclado virtual */
+    .terminal-body {
+        padding-bottom: 50vh; /* Espaço para o teclado virtual */
+    }
+
+    .mobile-input {
+        font-size: 16px; /* Previne zoom no iOS */
+    }
+}
+
+/* Input invisível para mobile */
+.mobile-input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    pointer-events: none;
+    position: fixed;
+    left: -1000px;
+    top: 50%;
 }
