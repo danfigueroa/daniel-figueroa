@@ -3,6 +3,7 @@
 /* Novas variáveis para o tema Shades of Purple */
 :root {
     --background-color: #1e1e3f; /* Deep purple background */
+    --desktop-background: #000000; /* Fundo preto do desktop */
     --foreground-color: #ffffff; /* Pure white text */
     --header-background: #1e1e3f; /* Header matches background */
     --prompt-color: #c397d8; /* Base purple (not used directly) */
@@ -13,6 +14,9 @@
     --scrollbar-thumb-color: #c397d8;
     --success-green: #3ad900; /* Green color for success messages */
     --command-blue: #75eaff; /* Light blue for command outputs */
+    --terminal-shadow: rgba(0, 0, 0, 0.4);
+    --terminal-border: rgba(255, 255, 255, 0.1);
+    --terminal-blur: rgba(0, 0, 0, 0.2);
 }
 
 html,
@@ -21,7 +25,7 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background: var(--background-color);
+    background: var(--desktop-background);
     color: var(--foreground-color);
     font-family: 'SF Mono', 'Monaco', 'Fira Code', monospace;
     font-size: 18px;
@@ -31,22 +35,40 @@ body {
 .terminal-container {
     display: flex;
     flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-    box-sizing: border-box;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); /* Adiciona destaque à janela */
+    width: 80%;
+    height: 80vh;
+    max-width: 1200px;
+    box-shadow: 0 20px 68px var(--terminal-shadow);
+    backdrop-filter: blur(8px);
+    margin: 10vh auto;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--background-color);
+    border: 1px solid var(--terminal-border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.terminal-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 72px var(--terminal-shadow);
 }
 
 /* Barra no topo do terminal */
 .terminal-header {
     background: var(--header-background);
-    padding: 8px;
+    padding: 12px 16px;
     text-align: center;
     font-weight: bold;
     color: var(--foreground-color);
     font-size: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     letter-spacing: 1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px 8px 0 0;
+    user-select: none;
 }
 
 /* Área rolável com o conteúdo do terminal */
@@ -56,6 +78,8 @@ body {
     padding: 12px 16px;
     box-sizing: border-box;
     background: var(--background-color);
+    line-height: 1.8;
+    scroll-behavior: smooth;
 }
 
 /* Novo estilo para o prompt (mimicando o powerlevel10k) */
@@ -76,7 +100,8 @@ body {
 }
 
 .prompt-input {
-    padding: 0 0.5em;
+    padding: 0;
+    margin-left: 8px;
     background: transparent;
     color: var(--foreground-color);
     font-family: inherit;
@@ -88,18 +113,20 @@ body {
 .prompt-line {
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 /* Cursor retangular maior */
 .cursor {
     display: inline-block;
     width: 10px;
-    height: 1em;
+    height: 18px;
     background: var(--cursor-color);
-    margin-left: 4px;
+    margin-left: 0;
     position: relative;
-    top: 1px;
-    animation: blink 0.8s infinite alternate;
+    top: 2px;
+    animation: blink 1.2s steps(2) infinite;
+    opacity: 0.7;
 }
 
 /* Destaque para labels */
@@ -115,24 +142,38 @@ body {
 }
 
 @keyframes blink {
-    0% {
-        opacity: 1;
-    }
+    0%,
     100% {
         opacity: 0;
+    }
+    50% {
+        opacity: 1;
     }
 }
 
 /* Melhorar a aparência das linhas com espaçamento adequado para UX/UI */
 .terminal-body div {
     white-space: pre-wrap;
-    line-height: 1.6; /* Aumentado para melhor legibilidade */
-    margin-bottom: 0.8em; /* Espaçamento entre as linhas */
+    line-height: 1.5;
+    margin-bottom: 0.8em;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Scrollbar personalizada */
 .terminal-body::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .terminal-body::-webkit-scrollbar-track {
@@ -142,6 +183,11 @@ body {
 .terminal-body::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb-color);
     border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-yellow);
 }
 
 /* Estilos para o currículo */
@@ -153,4 +199,122 @@ body {
 .tech-category {
     color: var(--accent-yellow);
     font-weight: bold;
+}
+
+/* Botões do macOS */
+.mac-buttons {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 8px;
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+.terminal-container:hover .mac-buttons {
+    opacity: 1;
+}
+
+.mac-button {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.mac-button:hover {
+    transform: scale(1.1);
+}
+
+.mac-button:active {
+    transform: scale(0.95);
+}
+
+.mac-close {
+    background: #ff5f56;
+}
+
+.mac-minimize {
+    background: #ffbd2e;
+}
+
+.mac-expand {
+    background: #27c93f;
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+    html,
+    body {
+        font-size: 16px;
+    }
+
+    .terminal-header {
+        font-size: 16px;
+        padding: 8px 12px;
+    }
+
+    .terminal-body {
+        padding: 8px 12px;
+    }
+
+    .mac-buttons {
+        left: 12px;
+    }
+
+    .mac-button {
+        width: 10px;
+        height: 10px;
+    }
+
+    .terminal-container {
+        width: 90%;
+        height: 90vh;
+        margin: 5vh auto;
+    }
+}
+
+@media (max-width: 480px) {
+    html,
+    body {
+        font-size: 14px;
+    }
+
+    .terminal-header {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .terminal-body {
+        padding: 6px 10px;
+    }
+
+    /* Ajusta o texto longo para não quebrar o layout */
+    .terminal-body div {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
+    }
+
+    /* Ajusta o prompt para telas pequenas */
+    .prompt-line {
+        flex-wrap: wrap;
+    }
+
+    .terminal-container {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .terminal-header {
+        border-radius: 0;
+    }
 }

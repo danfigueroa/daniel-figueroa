@@ -100,15 +100,38 @@ export const Terminal: React.FC = () => {
         setHistory((h) => [...h, { content: formatted, isHtml: true }])
     }
 
+    const focusTerminal = () => {
+        if (containerRef.current) {
+            containerRef.current.focus()
+        }
+    }
+
     return (
         <div className="terminal-container">
-            <div className="terminal-header">👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻</div>
+            <div className="terminal-header" onClick={focusTerminal}>
+                <div className="mac-buttons">
+                    <button
+                        className="mac-button mac-close"
+                        aria-label="Close"
+                    ></button>
+                    <button
+                        className="mac-button mac-minimize"
+                        aria-label="Minimize"
+                    ></button>
+                    <button
+                        className="mac-button mac-expand"
+                        aria-label="Expand"
+                    ></button>
+                </div>
+                👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻
+            </div>
             <div
                 className="terminal-body"
                 tabIndex={0}
                 onKeyDown={handleKeyDown}
                 ref={containerRef}
                 style={{ outline: 'none' }}
+                onClick={focusTerminal}
             >
                 {history.map((line, i) =>
                     line.isHtml ? (
