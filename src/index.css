@@ -1,22 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
 
-/* Novas variáveis para o tema Shades of Purple */
+/* Variáveis para o tema terminal aprimorado */
 :root {
-    --background-color: #1e1e3f; /* Deep purple background */
+    --background-color: #0d1117; /* GitHub dark background */
     --desktop-background: #000000; /* Fundo preto do desktop */
-    --foreground-color: #ffffff; /* Pure white text */
-    --header-background: #1e1e3f; /* Header matches background */
-    --prompt-color: #c397d8; /* Base purple (not used directly) */
-    --accent-yellow: #ffff00; /* Bright yellow for accents */
-    --cursor-color: #ff6188; /* Cursor color */
-    --label-color: #f07178; /* Label color */
-    --scrollbar-track-color: #17173d; /* Darker purple for scrollbar track */
-    --scrollbar-thumb-color: #c397d8;
-    --success-green: #3ad900; /* Green color for success messages */
-    --command-blue: #75eaff; /* Light blue for command outputs */
-    --terminal-shadow: rgba(0, 0, 0, 0.4);
-    --terminal-border: rgba(255, 255, 255, 0.1);
-    --terminal-blur: rgba(0, 0, 0, 0.2);
+    --foreground-color: #c9d1d9; /* Texto principal */
+    --header-background: #161b22; /* Header mais escuro */
+    --prompt-color: #58a6ff; /* Azul para prompt */
+    --accent-yellow: #f9c23c; /* Amarelo para acentos */
+    --cursor-color: #7c3aed; /* Roxo para cursor */
+    --label-color: #ff7b72; /* Vermelho suave para labels */
+    --scrollbar-track-color: #21262d; /* Track do scrollbar */
+    --scrollbar-thumb-color: #30363d;
+    --success-green: #3fb950; /* Verde para sucesso */
+    --command-blue: #79c0ff; /* Azul claro para comandos */
+    --terminal-shadow: rgba(0, 0, 0, 0.6);
+    --terminal-border: rgba(240, 246, 252, 0.1);
+    --terminal-blur: rgba(0, 0, 0, 0.3);
+    --glow-color: #7c3aed;
+    --tech-category-color: #ffa657;
 }
 
 html,
@@ -38,19 +40,32 @@ body {
     width: 80%;
     height: 80vh;
     max-width: 1200px;
-    box-shadow: 0 20px 68px var(--terminal-shadow);
-    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 68px var(--terminal-shadow), 0 0 20px rgba(124, 58, 237, 0.1);
+    backdrop-filter: blur(12px);
     margin: 10vh auto;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
     background: var(--background-color);
     border: 1px solid var(--terminal-border);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.terminal-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(124, 58, 237, 0.03) 50%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .terminal-container:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 24px 72px var(--terminal-shadow);
+    transform: translateY(-4px);
+    box-shadow: 0 28px 80px var(--terminal-shadow), 0 0 30px rgba(124, 58, 237, 0.2);
 }
 
 /* Barra no topo do terminal */
@@ -92,6 +107,8 @@ body {
     background: var(--background-color);
     line-height: 1.8;
     scroll-behavior: smooth;
+    position: relative;
+    z-index: 1;
 }
 
 /* Novo estilo para o prompt (mimicando o powerlevel10k) */
@@ -128,23 +145,25 @@ body {
     position: relative;
 }
 
-/* Cursor retangular maior */
+/* Cursor piscante com glow */
 .cursor {
     display: inline-block;
-    width: 10px;
+    width: 2px;
     height: 18px;
     background: var(--cursor-color);
     margin-left: 0;
     position: relative;
     top: 2px;
     animation: blink 1.2s steps(2) infinite;
-    opacity: 0.7;
+    opacity: 0.9;
+    box-shadow: 0 0 8px var(--cursor-color);
 }
 
 /* Destaque para labels */
 .label {
-    color: var(--accent-yellow);
+    color: var(--label-color);
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 123, 114, 0.4);
 }
 
 /* Label verde para comandos disponíveis */
@@ -166,21 +185,49 @@ body {
 /* Melhorar a aparência das linhas com espaçamento adequado para UX/UI */
 .terminal-body div {
     white-space: pre-wrap;
-    line-height: 1.5;
+    line-height: 1.6;
     margin-bottom: 0.8em;
+}
+
+/* Animação apenas para linhas não-sistema */
+.terminal-body div:not(.system-line) {
     opacity: 0;
-    animation: fadeIn 0.3s ease forwards;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* Linhas do sistema aparecem instantaneamente */
+.terminal-body div.system-line {
+    opacity: 1;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(15px);
     }
     to {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+/* Efeito de scanlines sutil */
+.terminal-body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.01) 2px,
+        rgba(255, 255, 255, 0.01) 4px
+    );
+    pointer-events: none;
+    z-index: 2;
 }
 
 /* Scrollbar personalizada */
@@ -209,8 +256,9 @@ body {
 }
 
 .tech-category {
-    color: var(--accent-yellow);
+    color: var(--tech-category-color);
     font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 166, 87, 0.3);
 }
 
 /* Botões do macOS */
@@ -317,13 +365,16 @@ body {
     }
 
     .terminal-header-title {
-        font-size: 14px;
+        font-size: 12px;
         padding: 0 40px;
         box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .terminal-body {
-        padding: 16px;
+        padding: 12px;
         height: calc(100vh - 48px);
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -334,14 +385,26 @@ body {
         overflow-wrap: break-word;
         word-wrap: break-word;
         word-break: break-word;
-        font-size: 14px;
-        line-height: 1.6;
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 0.6em;
     }
 
     .prompt-line {
-        flex-wrap: nowrap;
-        font-size: 14px;
+        flex-wrap: wrap;
+        font-size: 13px;
         margin-top: 8px;
+        gap: 0;
+    }
+
+    .prompt {
+        font-size: 13px;
+    }
+
+    .prompt-input {
+        font-size: 13px;
+        min-width: 0;
+        flex: 1;
     }
 
     .terminal-container {
@@ -354,6 +417,7 @@ body {
         left: 0;
         right: 0;
         bottom: 0;
+        box-shadow: none;
     }
 
     .terminal-header {
@@ -362,7 +426,7 @@ body {
 
     .mac-buttons {
         gap: 4px;
-        left: 10px;
+        left: 8px;
     }
 
     .mac-button {
@@ -373,12 +437,13 @@ body {
     }
 
     .terminal-body > div:not(:last-child) {
-        margin-bottom: 12px;
+        margin-bottom: 8px;
     }
 
     .cursor {
-        height: 16px;
+        height: 14px;
         top: 1px;
+        width: 1px;
     }
 
     @supports (-webkit-touch-callout: none) {
@@ -390,11 +455,23 @@ body {
 
     /* Ajustes para melhor experiência com teclado virtual */
     .terminal-body {
-        padding-bottom: 50vh; /* Espaço para o teclado virtual */
+        padding-bottom: 40vh; /* Espaço para o teclado virtual */
     }
 
     .mobile-input {
         font-size: 16px; /* Previne zoom no iOS */
+    }
+
+    /* Melhor quebra de linha para links */
+    a {
+        word-break: break-all;
+        display: inline-block;
+        max-width: 100%;
+    }
+
+    /* Ajuste para emojis e ícones */
+    .company, .tech-category {
+        font-size: 13px;
     }
 }
 
@@ -411,4 +488,117 @@ body {
     position: fixed;
     left: -1000px;
     top: 50%;
+}
+
+/* Estilos para animações typewriter */
+.typewriter-line {
+    position: relative;
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.typewriter-line.typing {
+    position: relative;
+}
+
+.typewriter-line.complete {
+    animation: none;
+}
+
+.typing-cursor {
+    display: inline-block;
+    background-color: var(--cursor-color);
+    width: 2px;
+    height: 1.2em;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    opacity: 0.9;
+    box-shadow: 0 0 8px var(--cursor-color);
+}
+
+/* Animação de entrada melhorada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Cursor de processamento */
+.cursor.processing {
+    background-color: var(--accent-yellow);
+    animation: processingPulse 0.8s ease-in-out infinite;
+    box-shadow: 0 0 12px var(--accent-yellow);
+}
+
+@keyframes processingPulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+/* Efeitos de glow para diferentes tipos de conteúdo */
+.html-line .label {
+    text-shadow: 0 0 8px var(--label-color);
+    animation: labelGlow 2s ease-in-out;
+}
+
+.html-line .tech-category {
+    text-shadow: 0 0 8px var(--tech-category-color);
+    animation: techGlow 2s ease-in-out;
+}
+
+.html-line .company {
+    text-shadow: 0 0 6px var(--command-blue);
+    animation: companyGlow 2s ease-in-out;
+}
+
+.html-line a {
+    transition: all 0.3s ease;
+    text-shadow: 0 0 4px currentColor;
+}
+
+.html-line a:hover {
+    text-shadow: 0 0 12px currentColor;
+    transform: translateX(2px);
+}
+
+@keyframes labelGlow {
+    0% { text-shadow: 0 0 4px var(--label-color); }
+    50% { text-shadow: 0 0 12px var(--label-color), 0 0 20px var(--label-color); }
+    100% { text-shadow: 0 0 8px var(--label-color); }
+}
+
+@keyframes techGlow {
+    0% { text-shadow: 0 0 4px var(--tech-category-color); }
+    50% { text-shadow: 0 0 12px var(--tech-category-color), 0 0 20px var(--tech-category-color); }
+    100% { text-shadow: 0 0 8px var(--tech-category-color); }
+}
+
+@keyframes companyGlow {
+    0% { text-shadow: 0 0 4px var(--command-blue); }
+    50% { text-shadow: 0 0 10px var(--command-blue), 0 0 16px var(--command-blue); }
+    100% { text-shadow: 0 0 6px var(--command-blue); }
+}
+
+/* Animação para comandos não reconhecidos */
+.text-line:has-text("Command not recognized"), 
+.text-line:has-text("Comando não reconhecido") {
+    animation: errorShake 0.5s ease-in-out;
+    color: #ff6b6b;
+    text-shadow: 0 0 8px #ff6b6b;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
 }
