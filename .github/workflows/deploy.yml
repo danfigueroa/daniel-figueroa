@@ -9,15 +9,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
+          
+      - name: Clear npm cache
+        run: npm cache clean --force
+        
+      - name: Remove package-lock and node_modules
+        run: |
+          rm -f package-lock.json
+          rm -rf node_modules
           
       - name: Install Dependencies
-        run: npm install
+        run: npm install --force
         
       - name: Build
         run: npm run build
@@ -26,4 +35,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist 
+          publish_dir: ./dist
