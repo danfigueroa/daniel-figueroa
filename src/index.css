@@ -19,6 +19,10 @@
     --terminal-blur: rgba(0, 0, 0, 0.3);
     --glow-color: #7c3aed;
     --tech-category-color: #ffa657;
+    /* Glows de texto: sempre em alpha baixo, para realçar sem borrar o glifo */
+    --label-glow: rgba(255, 123, 114, 0.28);
+    --tech-glow: rgba(255, 166, 87, 0.25);
+    --company-glow: rgba(249, 194, 60, 0.25);
 }
 
 html,
@@ -163,7 +167,7 @@ body {
 .label {
     color: var(--label-color);
     font-weight: bold;
-    text-shadow: 0 0 10px rgba(255, 123, 114, 0.4);
+    text-shadow: 0 0 6px var(--label-glow);
 }
 
 /* Label verde para comandos disponíveis */
@@ -301,7 +305,7 @@ body {
 .tech-category {
     color: var(--tech-category-color);
     font-weight: bold;
-    text-shadow: 0 0 8px rgba(255, 166, 87, 0.3);
+    text-shadow: 0 0 6px var(--tech-glow);
 }
 
 /* Botões do macOS */
@@ -594,48 +598,51 @@ body {
     }
 }
 
-/* Efeitos de glow para diferentes tipos de conteúdo */
+/* Efeitos de glow para diferentes tipos de conteúdo.
+   Sempre com alpha baixo: em cor cheia a sombra engorda o glifo e
+   contamina a cor do texto em vez de apenas realçá-lo. */
 .html-line .label {
-    text-shadow: 0 0 8px var(--label-color);
-    animation: labelGlow 2s ease-in-out;
+    text-shadow: 0 0 6px var(--label-glow);
+    animation: labelGlow 1.2s ease-out;
 }
 
 .html-line .tech-category {
-    text-shadow: 0 0 8px var(--tech-category-color);
-    animation: techGlow 2s ease-in-out;
+    text-shadow: 0 0 6px var(--tech-glow);
+    animation: techGlow 1.2s ease-out;
 }
 
 .html-line .company {
-    text-shadow: 0 0 6px var(--command-blue);
-    animation: companyGlow 2s ease-in-out;
+    text-shadow: 0 0 6px var(--company-glow);
+    animation: companyGlow 1.2s ease-out;
 }
 
 .html-line a {
     transition: all 0.3s ease;
-    text-shadow: 0 0 4px currentColor;
+    text-shadow: 0 0 4px rgba(121, 192, 255, 0.22);
 }
 
 .html-line a:hover {
-    text-shadow: 0 0 12px currentColor;
+    text-shadow: 0 0 6px rgba(121, 192, 255, 0.45);
     transform: translateX(2px);
 }
 
+/* Realce de entrada: sobe um pouco e assenta, sem pulsar */
 @keyframes labelGlow {
-    0% { text-shadow: 0 0 4px var(--label-color); }
-    50% { text-shadow: 0 0 12px var(--label-color), 0 0 20px var(--label-color); }
-    100% { text-shadow: 0 0 8px var(--label-color); }
+    0% { text-shadow: 0 0 2px var(--label-glow); }
+    50% { text-shadow: 0 0 9px var(--label-glow); }
+    100% { text-shadow: 0 0 6px var(--label-glow); }
 }
 
 @keyframes techGlow {
-    0% { text-shadow: 0 0 4px var(--tech-category-color); }
-    50% { text-shadow: 0 0 12px var(--tech-category-color), 0 0 20px var(--tech-category-color); }
-    100% { text-shadow: 0 0 8px var(--tech-category-color); }
+    0% { text-shadow: 0 0 2px var(--tech-glow); }
+    50% { text-shadow: 0 0 9px var(--tech-glow); }
+    100% { text-shadow: 0 0 6px var(--tech-glow); }
 }
 
 @keyframes companyGlow {
-    0% { text-shadow: 0 0 4px var(--command-blue); }
-    50% { text-shadow: 0 0 10px var(--command-blue), 0 0 16px var(--command-blue); }
-    100% { text-shadow: 0 0 6px var(--command-blue); }
+    0% { text-shadow: 0 0 2px var(--company-glow); }
+    50% { text-shadow: 0 0 9px var(--company-glow); }
+    100% { text-shadow: 0 0 6px var(--company-glow); }
 }
 
 /* Animação para comandos não reconhecidos */
