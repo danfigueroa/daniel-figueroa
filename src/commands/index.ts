@@ -8,7 +8,7 @@ interface Commands {
 
 export const commandsPt: Commands = {
     help: () =>
-        '<span class="label">Comandos disponíveis:</span> help, about, experience, tech, contact, github, lang, clear',
+        '<span class="label">Comandos disponíveis:</span> help, about, experience, projects, tech, contact, github, lang, clear',
     about: () =>
         '<span class="label">Sobre mim:</span><br>Engenheiro de software backend com mais de 6 anos de experiência, especializado em Node.js/TypeScript e Go, projetando APIs, sistemas distribuídos e arquiteturas orientadas a eventos para ambientes de produção. Histórico comprovado de redução de latência de APIs críticas em mais de 90%, modernização de sistemas legados e contribuição em decisões de arquitetura backend nos domínios de IoT industrial, fintech, e-commerce, educação e saúde pública. Atuação prática com AWS, GCP, Kubernetes, observabilidade e otimização de performance.',
     experience: () =>
@@ -44,6 +44,20 @@ export const commandsPt: Commands = {
         '- Atuou em serviços construídos com Node.js, Go e Laravel hospedados em infraestrutura serverless na AWS.<br>' +
         '- Implementou testes unitários e conduziu refatorações pontuais para aumentar a confiabilidade de serviços críticos.<br>' +
         '  📋 <em>Stack:</em> Node.js · TypeScript · Go · PHP · MongoDB · MySQL · Redis · AWS',
+    projects: () =>
+        '<span class="label">Projetos Pessoais:</span><br><br>' +
+        '✝️ <span class="company">Creo</span> — <a href="https://www.creo.com.br/" target="_blank" rel="noopener noreferrer">creo.com.br</a><br>' +
+        '- Rede social cristã construída do zero, do design do domínio ao deploy em produção.<br>' +
+        '- Backend em <strong>Go</strong>, expondo uma API REST que sustenta perfis, publicações, interações e o feed social.<br>' +
+        '- Frontend em <strong>React</strong>, com interface responsiva pensada para leitura e engajamento no mobile.<br>' +
+        '- Projeto solo end-to-end: modelagem de dados, autenticação, API, interface e infraestrutura.<br>' +
+        '  📋 <em>Stack:</em> Go · React · TypeScript · REST API<br><br>' +
+        '🎲 <span class="company">Campaign Survivor</span> — <a href="https://campaign-survivor.com" target="_blank" rel="noopener noreferrer">campaign-survivor.com</a><br>' +
+        '- Jogo de draft inspirado em RPGs de mesa, onde o jogador monta sua party escolhendo entre opções sorteadas a cada rodada.<br>' +
+        '- Backend em <strong>Go</strong>, responsável pela lógica de draft, regras de partida e estado do jogo.<br>' +
+        '- Frontend em <strong>React</strong>, com uma experiência de jogo rápida e jogável direto no navegador, sem instalação.<br>' +
+        '- Alcance <strong>global e orgânico</strong>: jogadores de mais de uma dezena de países, com destaque para Estados Unidos (58%), Brasil (12%), Irlanda (8%), França (5%) e Índia (3%).<br>' +
+        '  📋 <em>Stack:</em> Go · React · TypeScript · REST API',
     tech: () =>
         '<span class="label">Principais Tecnologias:</span><br><br>' +
         '💻 <span class="tech-category">Linguagens:</span><br>' +
@@ -75,7 +89,7 @@ export const commandsPt: Commands = {
 
 export const commandsEn: Commands = {
     help: () =>
-        '<span class="label">Available commands:</span> help, about, experience, tech, contact, github, lang, clear',
+        '<span class="label">Available commands:</span> help, about, experience, projects, tech, contact, github, lang, clear',
     about: () =>
         '<span class="label">About me:</span><br>Backend engineer with 6+ years of experience specialized in Node.js/TypeScript and Go, designing APIs, distributed systems and event-driven architectures for production environments. Track record of reducing critical API latency by 90%+, modernizing legacy systems and contributing to backend architectural decisions across industrial IoT, fintech, e-commerce, education and public health domains. Hands-on with AWS, GCP, Kubernetes, observability and performance optimization.',
     experience: () =>
@@ -111,6 +125,20 @@ export const commandsEn: Commands = {
         '- Worked across Node.js, Go and Laravel services hosted on AWS serverless infrastructure.<br>' +
         '- Added unit tests and led targeted refactorings to improve reliability of critical services.<br>' +
         '  📋 <em>Stack:</em> Node.js · TypeScript · Go · PHP · MongoDB · MySQL · Redis · AWS',
+    projects: () =>
+        '<span class="label">Personal Projects:</span><br><br>' +
+        '✝️ <span class="company">Creo</span> — <a href="https://www.creo.com.br/" target="_blank" rel="noopener noreferrer">creo.com.br</a><br>' +
+        '- A Christian social network built from scratch, from domain design to production deployment.<br>' +
+        '- <strong>Go</strong> backend exposing a REST API that powers profiles, posts, interactions and the social feed.<br>' +
+        '- <strong>React</strong> frontend with a responsive interface designed for mobile reading and engagement.<br>' +
+        '- Solo end-to-end project: data modeling, authentication, API, UI and infrastructure.<br>' +
+        '  📋 <em>Stack:</em> Go · React · TypeScript · REST API<br><br>' +
+        '🎲 <span class="company">Campaign Survivor</span> — <a href="https://campaign-survivor.com" target="_blank" rel="noopener noreferrer">campaign-survivor.com</a><br>' +
+        '- A draft game inspired by tabletop RPGs, where players build their party by picking from options drawn each round.<br>' +
+        '- <strong>Go</strong> backend handling draft logic, match rules and game state.<br>' +
+        '- <strong>React</strong> frontend delivering a fast, browser-playable experience with no install required.<br>' +
+        '- <strong>Global organic reach</strong>: players from more than a dozen countries, led by the United States (58%), Brazil (12%), Ireland (8%), France (5%) and India (3%).<br>' +
+        '  📋 <em>Stack:</em> Go · React · TypeScript · REST API',
     tech: () =>
         '<span class="label">Core Technologies:</span><br><br>' +
         '💻 <span class="tech-category">Languages:</span><br>' +
