@@ -11,6 +11,8 @@ interface Line {
     isSystem?: boolean // Identifica mensagens do sistema que devem aparecer instantaneamente
 }
 
+type Language = 'en' | 'pt'
+
 const PROMPT_USER = 'danfigueroa'
 const PROMPT_AT = '@'
 const PROMPT_LOCATION = 'terminal:~$ '
@@ -19,21 +21,28 @@ const translations = {
     en: {
         welcome: '👋 Welcome to my personal website!',
         helpMsg: "Type 'help' to see the available commands.",
+        langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
         langChanged: 'Language changed to English',
     },
     pt: {
         welcome: '👋 Bem-vindo ao meu site pessoal!',
         helpMsg: "Digite 'help' para ver os comandos disponíveis.",
+        langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
         langChanged: 'Idioma alterado para Português',
     },
 }
 
+// Idioma inicial a partir da preferência do navegador — visitantes
+// brasileiros abrem o site já em português.
+const detectLanguage = (): Language =>
+    navigator.language?.toLowerCase().startsWith('pt') ? 'pt' : 'en'
+
 export const Terminal: React.FC = () => {
     const [history, setHistory] = useState<Line[]>([])
     const [currentInput, setCurrentInput] = useState<string>('')
-    const [language, setLanguage] = useState<'en' | 'pt'>('en')
+    const [language, setLanguage] = useState<Language>(detectLanguage)
     const [commandHistory, setCommandHistory] = useState<string[]>([])
     const [historyIndex, setHistoryIndex] = useState<number>(-1)
     const [isProcessing, setIsProcessing] = useState<boolean>(false)
@@ -218,8 +227,13 @@ export const Terminal: React.FC = () => {
                 <div className="terminal-header-title">
                     👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻
                 </div>
-                <div style={{ width: '88px' }}></div>{' '}
-                {/* Espaçador para centralizar o título */}
+                {/* Ocupa o mesmo slot do antigo espaçador, mantendo o título centralizado */}
+                <span
+                    className="lang-indicator"
+                    title={translations[language].langHint}
+                >
+                    {language.toUpperCase()}
+                </span>
             </div>
             <div
                 className="terminal-body"

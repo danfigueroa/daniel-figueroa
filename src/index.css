@@ -172,6 +172,21 @@ body {
     font-weight: bold;
 }
 
+/* Idioma atual, no canto direito do header */
+.lang-indicator {
+    width: 88px;
+    flex-shrink: 0;
+    text-align: right;
+    padding-right: 4px;
+    box-sizing: border-box;
+    color: var(--foreground-color);
+    opacity: 0.45;
+    font-size: 0.75em;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    user-select: none;
+}
+
 @keyframes blink {
     0%,
     100% {
@@ -472,6 +487,12 @@ body {
     /* Ajuste para emojis e ícones */
     .company, .tech-category {
         font-size: 13px;
+    }
+
+    /* Header estreito: o indicador cede espaço para o título */
+    .lang-indicator {
+        width: 32px;
+        font-size: 0.65em;
     }
 }
 
