@@ -21,6 +21,7 @@ const translations = {
     en: {
         welcome: '👋 Welcome to my personal website!',
         helpMsg: "Type 'help' to see the available commands.",
+        hint: '💡 Tab autocompletes · ↑/↓ browses history',
         langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
         langChanged: 'Language changed to English',
@@ -28,6 +29,7 @@ const translations = {
     pt: {
         welcome: '👋 Bem-vindo ao meu site pessoal!',
         helpMsg: "Digite 'help' para ver os comandos disponíveis.",
+        hint: '💡 Tab completa · ↑/↓ navega o histórico',
         langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
         langChanged: 'Idioma alterado para Português',
@@ -38,6 +40,21 @@ const translations = {
 // brasileiros abrem o site já em português.
 const detectLanguage = (): Language =>
     navigator.language?.toLowerCase().startsWith('pt') ? 'pt' : 'en'
+
+// Bloco inicial do terminal, remontado também pelo comando `clear`.
+const buildWelcomeLines = (lang: Language): Line[] => {
+    const t = translations[lang]
+    return [
+        { content: t.welcome, id: 'welcome-0', isHtml: false, isSystem: true },
+        { content: t.helpMsg, id: 'help-1', isHtml: false, isSystem: true },
+        {
+            content: `<span class="hint-line">${t.hint}</span>`,
+            id: 'hint-2',
+            isHtml: true,
+            isSystem: true,
+        },
+    ]
+}
 
 export const Terminal: React.FC = () => {
     const [history, setHistory] = useState<Line[]>([])
@@ -52,13 +69,9 @@ export const Terminal: React.FC = () => {
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
-        // Ao iniciar, mostra a mensagem de boas-vindas no idioma atual
-        const t = translations[language]
-        setHistory([
-            { content: t.welcome, id: 'welcome-0', isHtml: false, isSystem: true },
-            { content: t.helpMsg, id: 'help-1', isHtml: false, isSystem: true },
-        ])
-        setLineCounter(2)
+        // Ao iniciar, mostra a mensagem de boas-vindas no idioma detectado
+        setHistory(buildWelcomeLines(language))
+        setLineCounter(3)
     }, [])
 
     useEffect(() => {
@@ -134,14 +147,10 @@ export const Terminal: React.FC = () => {
         setTimeout(() => {
             if (normalized === 'clear') {
                 // Limpa o terminal e restaura as mensagens iniciais
-                const t = translations[language]
-                setHistory([
-                    { content: t.welcome, id: 'welcome-0', isHtml: false, isSystem: true },
-                    { content: t.helpMsg, id: 'help-1', isHtml: false, isSystem: true },
-                ])
+                setHistory(buildWelcomeLines(language))
                 setCurrentInput('')
                 setIsProcessing(false)
-                setLineCounter(2)
+                setLineCounter(3)
                 return
             }
 

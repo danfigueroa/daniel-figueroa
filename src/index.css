@@ -172,6 +172,19 @@ body {
     font-weight: bold;
 }
 
+/* Dica de atalhos de teclado — discreta, sem competir com o conteúdo */
+.hint-line {
+    opacity: 0.5;
+    font-size: 0.85em;
+}
+
+/* Tab e setas não existem em touch: a dica só atrapalharia */
+@media (hover: none) {
+    .hint-line {
+        display: none;
+    }
+}
+
 /* Idioma atual, no canto direito do header */
 .lang-indicator {
     width: 88px;
