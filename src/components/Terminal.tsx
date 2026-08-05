@@ -1,7 +1,11 @@
 // src/components/Terminal.tsx
 import React, { useState, useEffect, useRef } from 'react'
 import { commandsEn, commandsPt, COMMAND_NAMES } from '../commands'
-import { getCompletions, longestCommonPrefix } from '../commands/matching'
+import {
+    findClosestCommand,
+    getCompletions,
+    longestCommonPrefix,
+} from '../commands/matching'
 import { ParticleEffect } from './ParticleEffect'
 
 interface Line {
@@ -25,6 +29,8 @@ const translations = {
         hint: '💡 Tab autocompletes · ↑/↓ browses history',
         langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
+        didYouMean: (cmd: string) =>
+            `Did you mean: <span class="command-hint">${cmd}</span>?`,
         langChanged: 'Language changed to English',
     },
     pt: {
@@ -33,6 +39,8 @@ const translations = {
         hint: '💡 Tab completa · ↑/↓ navega o histórico',
         langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
+        didYouMean: (cmd: string) =>
+            `Você quis dizer: <span class="command-hint">${cmd}</span>?`,
         langChanged: 'Idioma alterado para Português',
     },
 }
@@ -250,8 +258,21 @@ export const Terminal: React.FC = () => {
                     setIsProcessing(false)
                 }
             } else {
-                const errorLineId = `error-${lineCounter}`
-                setHistory((h) => [...h, { content: t.unrecognizedCmd(cmd), id: errorLineId, isHtml: false, isSystem: true }])
+                // Erro e, quando houver um comando parecido, o "did you mean"
+                // para o typo não virar um beco sem saída.
+                const closest = findClosestCommand(normalized, COMMAND_NAMES)
+                const errorHtml = closest
+                    ? `${t.unrecognizedCmd(cmd)}<br>${t.didYouMean(closest)}`
+                    : t.unrecognizedCmd(cmd)
+                setHistory((h) => [
+                    ...h,
+                    {
+                        content: errorHtml,
+                        id: `error-${lineCounter}`,
+                        isHtml: true,
+                        isSystem: true,
+                    },
+                ])
                 setLineCounter(prev => prev + 1)
                 setIsProcessing(false)
             }

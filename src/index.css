@@ -194,6 +194,12 @@ body {
     }
 }
 
+/* Comando sugerido pelo "did you mean" */
+.command-hint {
+    color: var(--command-blue);
+    font-weight: bold;
+}
+
 /* Idioma atual, no canto direito do header */
 .lang-indicator {
     width: 88px;
