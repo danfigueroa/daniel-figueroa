@@ -1,6 +1,7 @@
 // src/components/Terminal.tsx
 import React, { useState, useEffect, useRef } from 'react'
-import { commandsEn, commandsPt } from '../commands'
+import { commandsEn, commandsPt, COMMAND_NAMES } from '../commands'
+import { getCompletions, longestCommonPrefix } from '../commands/matching'
 import { ParticleEffect } from './ParticleEffect'
 
 interface Line {
@@ -80,8 +81,65 @@ export const Terminal: React.FC = () => {
         }
     }, [history])
 
+    // Sugestão inline: primeiro comando que casa com o que já foi digitado.
+    // Derivado do render, não guardado em estado.
+    const trimmedInput = currentInput.trim()
+    const suggestion =
+        trimmedInput !== '' && !currentInput.includes(' ')
+            ? COMMAND_NAMES.find((name) =>
+                  name.startsWith(trimmedInput.toLowerCase())
+              )
+            : undefined
+    const ghost = suggestion ? suggestion.slice(currentInput.length) : ''
+
+    const addSystemLine = (
+        content: string,
+        idPrefix: string,
+        isHtml = false
+    ) => {
+        setHistory((h) => [
+            ...h,
+            { content, id: `${idPrefix}-${lineCounter}`, isHtml, isSystem: true },
+        ])
+        setLineCounter((prev) => prev + 1)
+    }
+
+    const handleTabCompletion = () => {
+        const matches = getCompletions(currentInput, COMMAND_NAMES)
+        if (matches.length === 0) return
+
+        if (matches.length === 1) {
+            setCurrentInput(matches[0])
+            return
+        }
+
+        const common = longestCommonPrefix(matches)
+        if (common.length > trimmedInput.length) {
+            setCurrentInput(common)
+            return
+        }
+
+        // O prefixo comum não avança: lista as opções, como faz um shell.
+        addSystemLine(matches.join('   '), 'completions')
+    }
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'ArrowUp') {
+        if (e.key === 'Tab') {
+            // Sem o preventDefault o foco escaparia do terminal.
+            e.preventDefault()
+            if (!isProcessing) handleTabCompletion()
+        } else if (e.key === 'ArrowRight') {
+            // Aceita a sugestão apenas com o caret no fim do texto, para não
+            // atrapalhar a navegação normal dentro do que já foi digitado.
+            if (
+                suggestion &&
+                ghost !== '' &&
+                e.currentTarget.selectionStart === currentInput.length
+            ) {
+                e.preventDefault()
+                setCurrentInput(suggestion)
+            }
+        } else if (e.key === 'ArrowUp') {
             e.preventDefault()
             if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
                 const newIndex = historyIndex + 1
@@ -304,6 +362,9 @@ export const Terminal: React.FC = () => {
                     </span>
                     <span className="prompt-input">{currentInput}</span>
                     <span className={`cursor ${isProcessing ? 'processing' : ''}`}></span>
+                    {ghost && (
+                        <span className="ghost-suggestion">{ghost}</span>
+                    )}
                     <input
                         ref={inputRef}
                         type="text"

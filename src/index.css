@@ -172,6 +172,15 @@ body {
     font-weight: bold;
 }
 
+/* Sugestão inline do restante do comando, no estilo do fish shell */
+.ghost-suggestion {
+    color: var(--foreground-color);
+    opacity: 0.35;
+    user-select: none;
+    pointer-events: none;
+    white-space: pre;
+}
+
 /* Dica de atalhos de teclado — discreta, sem competir com o conteúdo */
 .hint-line {
     opacity: 0.5;
