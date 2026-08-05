@@ -6,9 +6,31 @@ interface Commands {
     [key: string]: CommandHandler
 }
 
+/**
+ * Lista canônica de comandos, na ordem em que o `help` os apresenta.
+ * É a fonte usada também pelo autocomplete e pelo "did you mean".
+ *
+ * `lang` entra aqui mesmo não existindo nos registries abaixo: ele é
+ * tratado diretamente no Terminal, então derivar esta lista das chaves
+ * dos registries o deixaria de fora.
+ */
+export const COMMAND_NAMES = [
+    'help',
+    'about',
+    'experience',
+    'projects',
+    'tech',
+    'contact',
+    'github',
+    'lang',
+    'clear',
+] as const
+
+const helpText = (label: string) =>
+    `<span class="label">${label}</span> ${COMMAND_NAMES.join(', ')}`
+
 export const commandsPt: Commands = {
-    help: () =>
-        '<span class="label">Comandos disponíveis:</span> help, about, experience, projects, tech, contact, github, lang, clear',
+    help: () => helpText('Comandos disponíveis:'),
     about: () =>
         '<span class="label">Sobre mim:</span><br>Engenheiro de software backend com mais de 6 anos de experiência, especializado em Node.js/TypeScript e Go, projetando APIs, sistemas distribuídos e arquiteturas orientadas a eventos para ambientes de produção. Histórico comprovado de redução de latência de APIs críticas em mais de 90%, modernização de sistemas legados e contribuição em decisões de arquitetura backend nos domínios de IoT industrial, fintech, e-commerce, educação e saúde pública. Atuação prática com AWS, GCP, Kubernetes, observabilidade e otimização de performance.',
     experience: () =>
@@ -88,8 +110,7 @@ export const commandsPt: Commands = {
 }
 
 export const commandsEn: Commands = {
-    help: () =>
-        '<span class="label">Available commands:</span> help, about, experience, projects, tech, contact, github, lang, clear',
+    help: () => helpText('Available commands:'),
     about: () =>
         '<span class="label">About me:</span><br>Backend engineer with 6+ years of experience specialized in Node.js/TypeScript and Go, designing APIs, distributed systems and event-driven architectures for production environments. Track record of reducing critical API latency by 90%+, modernizing legacy systems and contributing to backend architectural decisions across industrial IoT, fintech, e-commerce, education and public health domains. Hands-on with AWS, GCP, Kubernetes, observability and performance optimization.',
     experience: () =>
