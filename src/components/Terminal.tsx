@@ -117,9 +117,13 @@ export const Terminal: React.FC = () => {
         ])
         setLineCounter(prev => prev + 1)
 
+        // Nome normalizado uma única vez: comparações e lookup no registry
+        // precisam concordar, senão `Clear` funciona e `About` não.
+        const normalized = cmd.trim().toLowerCase()
+
         // Simula um pequeno delay de processamento
         setTimeout(() => {
-            if (cmd.toLowerCase() === 'clear') {
+            if (normalized === 'clear') {
                 // Limpa o terminal e restaura as mensagens iniciais
                 const t = translations[language]
                 setHistory([
@@ -132,7 +136,7 @@ export const Terminal: React.FC = () => {
                 return
             }
 
-            if (cmd === '') {
+            if (normalized === '') {
                 // Comando vazio
                 setCurrentInput('')
                 setIsProcessing(false)
@@ -140,7 +144,7 @@ export const Terminal: React.FC = () => {
             }
 
             // Comando especial para trocar idioma
-            if (cmd.toLowerCase() === 'lang' || cmd.toLowerCase() === 'language') {
+            if (normalized === 'lang' || normalized === 'language') {
                 const newLang = language === 'en' ? 'pt' : 'en'
                 setLanguage(newLang)
                 const t = translations[newLang]
@@ -155,7 +159,7 @@ export const Terminal: React.FC = () => {
             const currentCommands = language === 'en' ? commandsEn : commandsPt
             const t = translations[language]
 
-            const handler = currentCommands[cmd]
+            const handler = currentCommands[normalized]
             if (handler) {
                 const result = handler()
                 if (result instanceof Promise) {
