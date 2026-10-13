@@ -146,6 +146,31 @@ export const Terminal: React.FC = () => {
         addSystemLine(matches.join('   '), 'completions')
     }
 
+    // Ações de teclado isoladas para servirem tanto ao teclado físico quanto
+    // à barra de teclas extras do celular.
+    const acceptSuggestion = () => {
+        if (suggestion && ghost !== '') setCurrentInput(suggestion)
+    }
+
+    const historyPrev = () => {
+        if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
+            const newIndex = historyIndex + 1
+            setHistoryIndex(newIndex)
+            setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
+        }
+    }
+
+    const historyNext = () => {
+        if (historyIndex > 0) {
+            const newIndex = historyIndex - 1
+            setHistoryIndex(newIndex)
+            setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
+        } else if (historyIndex === 0) {
+            setHistoryIndex(-1)
+            setCurrentInput('')
+        }
+    }
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Tab') {
             // Sem o preventDefault o foco escaparia do terminal.
@@ -160,25 +185,14 @@ export const Terminal: React.FC = () => {
                 e.currentTarget.selectionStart === currentInput.length
             ) {
                 e.preventDefault()
-                setCurrentInput(suggestion)
+                acceptSuggestion()
             }
         } else if (e.key === 'ArrowUp') {
             e.preventDefault()
-            if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
-                const newIndex = historyIndex + 1
-                setHistoryIndex(newIndex)
-                setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
-            }
+            historyPrev()
         } else if (e.key === 'ArrowDown') {
             e.preventDefault()
-            if (historyIndex > 0) {
-                const newIndex = historyIndex - 1
-                setHistoryIndex(newIndex)
-                setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
-            } else if (historyIndex === 0) {
-                setHistoryIndex(-1)
-                setCurrentInput('')
-            }
+            historyNext()
         } else if (e.key === 'Backspace') {
             return // Deixa o input handle o backspace naturalmente
         } else if (
