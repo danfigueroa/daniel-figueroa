@@ -488,24 +488,24 @@ body {
         overflow-wrap: break-word;
         word-wrap: break-word;
         word-break: break-word;
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.5;
         margin-bottom: 0.6em;
     }
 
     .prompt-line {
         flex-wrap: wrap;
-        font-size: 13px;
+        font-size: 14px;
         margin-top: 8px;
         gap: 0;
     }
 
     .prompt {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .prompt-input {
-        font-size: 13px;
+        font-size: 14px;
         min-width: 0;
         flex: 1;
     }
@@ -570,7 +570,7 @@ body {
 
     /* Ajuste para emojis e ícones */
     .company, .tech-category {
-        font-size: 13px;
+        font-size: 14px;
     }
 
     /* Header estreito: o indicador cede espaço para o título */
