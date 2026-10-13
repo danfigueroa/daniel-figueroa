@@ -192,9 +192,20 @@ body {
 }
 
 /* Tab e setas não existem em touch: a dica só atrapalharia */
+/* Cada tipo de dispositivo vê só a dica que consegue usar */
+.touch-hint-line {
+    display: none;
+    opacity: 0.5;
+    font-size: 0.85em;
+}
+
 @media (hover: none) {
     .hint-line {
         display: none;
+    }
+
+    .touch-hint-line {
+        display: inline;
     }
 }
 

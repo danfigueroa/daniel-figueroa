@@ -34,6 +34,7 @@ const translations = {
         helpMsg:
             "Type 'help' to explore experience, projects and contact.",
         hint: '💡 Tab autocompletes · ↑/↓ browses history',
+        touchHint: '💡 Tap a command to run it · use the key bar for Tab and history',
         langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
         didYouMean: (cmd: string) =>
@@ -52,6 +53,8 @@ const translations = {
         helpMsg:
             "Digite 'help' para explorar experiência, projetos e contato.",
         hint: '💡 Tab completa · ↑/↓ navega o histórico',
+        touchHint:
+            '💡 Toque num comando para executá-lo · use a barra para Tab e histórico',
         langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
         didYouMean: (cmd: string) =>
@@ -94,6 +97,12 @@ const buildWelcomeLines = (lang: Language): Line[] => {
             isHtml: true,
             isSystem: true,
         },
+        {
+            content: `<span class="touch-hint-line">${t.touchHint}</span>`,
+            id: 'touch-hint-4',
+            isHtml: true,
+            isSystem: true,
+        },
     ]
 }
 
@@ -112,7 +121,7 @@ export const Terminal: React.FC = () => {
     useEffect(() => {
         // Ao iniciar, mostra a mensagem de boas-vindas no idioma detectado
         setHistory(buildWelcomeLines(language))
-        setLineCounter(3)
+        setLineCounter(5)
     }, [])
 
     useEffect(() => {
@@ -297,7 +306,7 @@ export const Terminal: React.FC = () => {
                 setHistory(buildWelcomeLines(language))
                 setCurrentInput('')
                 setIsProcessing(false)
-                setLineCounter(3)
+                setLineCounter(5)
                 return
             }
 
