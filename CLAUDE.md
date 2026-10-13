@@ -41,6 +41,10 @@ The site is a terminal on purpose — navigation is solved with real shell affor
 - A dimmed ghost suggestion trails the cursor; `→` accepts it when the caret is at the end.
 - Unknown commands get a "did you mean" suggestion instead of dead-ending.
 - Language is auto-detected from `navigator.language` and shown in the header; `lang` toggles it.
+- `↑/↓` walk the command history, most recent first.
+- Command names in output (`help`, "did you mean", Tab's option list) are wrapped with `commandLink()` from `src/commands/index.ts` and run on tap or click. The terminal reads `data-cmd` and only executes names present in `COMMAND_NAMES`. This is terminal-style clickable output, not chips — don't turn it into buttons or a menu.
+- Touch devices get an extra-keys row (`Tab ↑ ↓ →`, like Termux/Blink) under the terminal, wired to the same actions as the physical keys. It uses `onPointerDown` + `preventDefault` so the virtual keyboard stays open. Desktop never shows it.
+- On small screens the container height follows `visualViewport` through the `--vvh` CSS variable so the prompt stays above the virtual keyboard.
 
 Command lookup is case-insensitive — `executeCommand` normalizes once into `normalized` and every comparison and registry lookup must use it.
 
