@@ -198,6 +198,43 @@ body {
     }
 }
 
+/* Barra de teclas extras (Tab ↑ ↓ →), só em telas de toque — o teclado
+   virtual não tem essas teclas. */
+.extra-keys {
+    display: none;
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .extra-keys {
+        display: flex;
+        gap: 6px;
+        padding: 6px;
+        background: var(--header-background);
+        border-top: 1px solid var(--terminal-border);
+        position: relative;
+        z-index: 1;
+    }
+}
+
+.extra-key {
+    flex: 1;
+    min-height: 44px;
+    background: var(--background-color);
+    color: var(--foreground-color);
+    border: 1px solid var(--terminal-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: bold;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.extra-key:active {
+    background: var(--scrollbar-thumb-color);
+    color: var(--accent-yellow);
+}
+
 /* Comando sugerido pelo "did you mean" */
 .command-hint {
     color: var(--command-blue);

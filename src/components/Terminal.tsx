@@ -34,6 +34,12 @@ const translations = {
         didYouMean: (cmd: string) =>
             `Did you mean: <span class="command-hint">${cmd}</span>?`,
         langChanged: 'Language changed to English',
+        extraKeys: {
+            tab: 'Complete',
+            prev: 'Previous command',
+            next: 'Next command',
+            accept: 'Accept suggestion',
+        },
     },
     pt: {
         role: 'Engenheiro de Software Backend',
@@ -46,6 +52,12 @@ const translations = {
         didYouMean: (cmd: string) =>
             `Você quis dizer: <span class="command-hint">${cmd}</span>?`,
         langChanged: 'Idioma alterado para Português',
+        extraKeys: {
+            tab: 'Completar',
+            prev: 'Comando anterior',
+            next: 'Próximo comando',
+            accept: 'Aceitar sugestão',
+        },
     },
 }
 
@@ -170,6 +182,15 @@ export const Terminal: React.FC = () => {
             setCurrentInput('')
         }
     }
+
+    // Barra de teclas do celular: o preventDefault no pointerdown mantém o
+    // foco no input, então o teclado virtual não fecha a cada toque.
+    const extraKeys = [
+        { label: 'Tab', name: 'tab', action: handleTabCompletion },
+        { label: '↑', name: 'prev', action: historyPrev },
+        { label: '↓', name: 'next', action: historyNext },
+        { label: '→', name: 'accept', action: acceptSuggestion },
+    ] as const
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Tab') {
@@ -428,6 +449,22 @@ export const Terminal: React.FC = () => {
                         spellCheck="false"
                     />
                 </div>
+            </div>
+            <div className="extra-keys">
+                {extraKeys.map(({ label, name, action }) => (
+                    <button
+                        key={name}
+                        type="button"
+                        className="extra-key"
+                        aria-label={translations[language].extraKeys[name]}
+                        onPointerDown={(e) => {
+                            e.preventDefault()
+                            if (!isProcessing) action()
+                        }}
+                    >
+                        {label}
+                    </button>
+                ))}
             </div>
             <ParticleEffect 
                 trigger={showParticles} 
