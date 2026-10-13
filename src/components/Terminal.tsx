@@ -24,8 +24,10 @@ const PROMPT_LOCATION = 'terminal:~$ '
 
 const translations = {
     en: {
-        welcome: '👋 Welcome to my personal website!',
-        helpMsg: "Type 'help' to see the available commands.",
+        role: 'Backend Software Engineer',
+        focus: 'Node.js · TypeScript · Go · Distributed systems · Cloud',
+        helpMsg:
+            "Type 'help' to explore experience, projects and contact.",
         hint: '💡 Tab autocompletes · ↑/↓ browses history',
         langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
@@ -34,8 +36,10 @@ const translations = {
         langChanged: 'Language changed to English',
     },
     pt: {
-        welcome: '👋 Bem-vindo ao meu site pessoal!',
-        helpMsg: "Digite 'help' para ver os comandos disponíveis.",
+        role: 'Engenheiro de Software Backend',
+        focus: 'Node.js · TypeScript · Go · Sistemas distribuídos · Cloud',
+        helpMsg:
+            "Digite 'help' para explorar experiência, projetos e contato.",
         hint: '💡 Tab completa · ↑/↓ navega o histórico',
         langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
@@ -54,11 +58,22 @@ const detectLanguage = (): Language =>
 const buildWelcomeLines = (lang: Language): Line[] => {
     const t = translations[lang]
     return [
-        { content: t.welcome, id: 'welcome-0', isHtml: false, isSystem: true },
-        { content: t.helpMsg, id: 'help-1', isHtml: false, isSystem: true },
+        {
+            content: `<span class="company">Daniel Macedo Figueroa</span> — ${t.role}`,
+            id: 'welcome-0',
+            isHtml: true,
+            isSystem: true,
+        },
+        {
+            content: `<span class="hint-line">${t.focus}</span>`,
+            id: 'focus-1',
+            isHtml: true,
+            isSystem: true,
+        },
+        { content: t.helpMsg, id: 'help-2', isHtml: false, isSystem: true },
         {
             content: `<span class="hint-line">${t.hint}</span>`,
-            id: 'hint-2',
+            id: 'hint-3',
             isHtml: true,
             isSystem: true,
         },
