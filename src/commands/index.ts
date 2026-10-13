@@ -68,6 +68,13 @@ export const commandsPt: Commands = {
         '  📋 <em>Stack:</em> Node.js · TypeScript · Go · PHP · MongoDB · MySQL · Redis · AWS',
     projects: () =>
         '<span class="label">Projetos Pessoais:</span><br><br>' +
+        '🗳️ <span class="company">Segundo Turno Brasil</span> — <a href="https://eleicao.danielfigueroa.dev" target="_blank" rel="noopener noreferrer">eleicao.danielfigueroa.dev</a> · <a href="https://github.com/danfigueroa/segundo-turno-brasil" target="_blank" rel="noopener noreferrer">GitHub</a><br>' +
+        '- Apuração <strong>ao vivo</strong> do 2º turno da eleição presidencial de 2026, pensada para o celular: resultado por Brasil, região, estado, município e país do exterior, com mapas interativos coloridos pela vantagem de cada candidato.<br>' +
+        '- Backend serverless em <strong>TypeScript</strong> (Vercel Functions em São Paulo) atrás de CDN: o servidor consulta o TSE poucas vezes por minuto, não importa a audiência, com defasagem de ~15–50 s, respostas 304 quando nada muda e fallback para o último dado válido se o TSE cair.<br>' +
+        '- Imagens e vídeo animado (MP4) gerados no próprio navegador, prontos para Stories e Feed, além de texto para WhatsApp e embed do placar ao vivo para portais.<br>' +
+        '- Análise da apuração em tempo real: chance de virada, evolução da contagem, saldo de votos por estado e comparação com o 1º turno e com 2022.<br>' +
+        '- ~116 KB de JS inicial, mapas do IBGE pré-renderizados no build e carregados sob demanda, ports & adapters com contrato de tipos único entre back e front, ~350 testes, 27 ADRs e acessibilidade AA.<br>' +
+        '  📋 <em>Stack:</em> TypeScript · React · Vite · Vercel Functions · CDN · GitHub Actions<br><br>' +
         '✝️ <span class="company">Creo</span> — <a href="https://www.creo.com.br/" target="_blank" rel="noopener noreferrer">creo.com.br</a><br>' +
         '- Rede social cristã construída do zero, do design do domínio ao deploy em produção.<br>' +
         '- Backend em <strong>Go</strong>, expondo uma API REST que sustenta perfis, publicações, interações e o feed social.<br>' +
@@ -148,6 +155,13 @@ export const commandsEn: Commands = {
         '  📋 <em>Stack:</em> Node.js · TypeScript · Go · PHP · MongoDB · MySQL · Redis · AWS',
     projects: () =>
         '<span class="label">Personal Projects:</span><br><br>' +
+        '🗳️ <span class="company">Segundo Turno Brasil</span> — <a href="https://eleicao.danielfigueroa.dev" target="_blank" rel="noopener noreferrer">eleicao.danielfigueroa.dev</a> · <a href="https://github.com/danfigueroa/segundo-turno-brasil" target="_blank" rel="noopener noreferrer">GitHub</a><br>' +
+        '- <strong>Live</strong> vote-count tracker for the 2026 Brazilian presidential runoff, built mobile-first: results by country, region, state, municipality and overseas country, with interactive maps shaded by each candidate\'s lead.<br>' +
+        '- Serverless <strong>TypeScript</strong> backend (Vercel Functions in São Paulo) behind a CDN: the origin polls the electoral court (TSE) only a few times per minute regardless of traffic, with ~15–50 s lag, 304 responses when nothing changed and fallback to the last valid snapshot if the TSE goes down.<br>' +
+        '- Images and animated video (MP4) generated in the browser, ready for Instagram Stories and Feed, plus WhatsApp text and an embeddable live scoreboard for news sites.<br>' +
+        '- Real-time count analysis: comeback odds, count progression, vote margin by state and comparison with the first round and with 2022.<br>' +
+        '- ~116 KB of initial JS, IBGE maps pre-rendered at build time and lazy-loaded, ports & adapters with a single type contract shared by back and front, ~350 tests, 27 ADRs and AA accessibility.<br>' +
+        '  📋 <em>Stack:</em> TypeScript · React · Vite · Vercel Functions · CDN · GitHub Actions<br><br>' +
         '✝️ <span class="company">Creo</span> — <a href="https://www.creo.com.br/" target="_blank" rel="noopener noreferrer">creo.com.br</a><br>' +
         '- A Christian social network built from scratch, from domain design to production deployment.<br>' +
         '- <strong>Go</strong> backend exposing a REST API that powers profiles, posts, interactions and the social feed.<br>' +
