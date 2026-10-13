@@ -328,7 +328,7 @@ export const Terminal: React.FC = () => {
                     ></button>
                 </div>
                 <div className="terminal-header-title">
-                    👨🏻‍💻 Daniel Macedo Figueroa 👨🏻‍💻
+                    danfigueroa — ~
                 </div>
                 {/* Ocupa o mesmo slot do antigo espaçador, mantendo o título centralizado */}
                 <span
