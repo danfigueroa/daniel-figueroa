@@ -1,6 +1,11 @@
 // src/components/Terminal.tsx
 import React, { useState, useEffect, useRef } from 'react'
-import { commandsEn, commandsPt, COMMAND_NAMES } from '../commands'
+import {
+    commandLink,
+    commandsEn,
+    commandsPt,
+    COMMAND_NAMES,
+} from '../commands'
 import {
     findClosestCommand,
     getCompletions,
@@ -32,7 +37,7 @@ const translations = {
         langHint: "Language: English — type 'lang' to switch",
         unrecognizedCmd: (cmd: string) => `Command not recognized: ${cmd}`,
         didYouMean: (cmd: string) =>
-            `Did you mean: <span class="command-hint">${cmd}</span>?`,
+            `Did you mean: ${commandLink(cmd)}?`,
         langChanged: 'Language changed to English',
         extraKeys: {
             tab: 'Complete',
@@ -50,7 +55,7 @@ const translations = {
         langHint: "Idioma: Português — digite 'lang' para trocar",
         unrecognizedCmd: (cmd: string) => `Comando não reconhecido: ${cmd}`,
         didYouMean: (cmd: string) =>
-            `Você quis dizer: <span class="command-hint">${cmd}</span>?`,
+            `Você quis dizer: ${commandLink(cmd)}?`,
         langChanged: 'Idioma alterado para Português',
         extraKeys: {
             tab: 'Completar',
@@ -155,7 +160,11 @@ export const Terminal: React.FC = () => {
         }
 
         // O prefixo comum não avança: lista as opções, como faz um shell.
-        addSystemLine(matches.join('   '), 'completions')
+        addSystemLine(
+            matches.map(commandLink).join(' &nbsp; '),
+            'completions',
+            true
+        )
     }
 
     // Ações de teclado isoladas para servirem tanto ao teclado físico quanto
@@ -345,6 +354,21 @@ export const Terminal: React.FC = () => {
         }
     }
 
+    // Comandos na saída (help, "did you mean", lista do Tab) são tocáveis.
+    // Executar sem focar o input evita que o teclado virtual cubra a resposta.
+    const handleBodyClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        const link = (e.target as HTMLElement).closest<HTMLElement>('[data-cmd]')
+        const name = link?.dataset.cmd
+        if (name && (COMMAND_NAMES as readonly string[]).includes(name)) {
+            if (!isProcessing) {
+                setShowParticles(true)
+                executeCommand(name)
+            }
+            return
+        }
+        focusTerminal()
+    }
+
     return (
         <div className="terminal-container">
             <div className="terminal-header" onClick={focusTerminal}>
@@ -378,7 +402,7 @@ export const Terminal: React.FC = () => {
                 tabIndex={0}
                 ref={containerRef}
                 style={{ outline: 'none' }}
-                onClick={focusTerminal}
+                onClick={handleBodyClick}
             >
                 {history.map((line, i) => {
                     // Mensagens do sistema aparecem instantaneamente
@@ -434,7 +458,12 @@ export const Terminal: React.FC = () => {
                     <span className="prompt-input">{currentInput}</span>
                     <span className={`cursor ${isProcessing ? 'processing' : ''}`}></span>
                     {ghost && (
-                        <span className="ghost-suggestion">{ghost}</span>
+                        <span
+                            className="ghost-suggestion"
+                            onClick={acceptSuggestion}
+                        >
+                            {ghost}
+                        </span>
                     )}
                     <input
                         ref={inputRef}

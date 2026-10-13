@@ -181,7 +181,7 @@ body {
     color: var(--foreground-color);
     opacity: 0.35;
     user-select: none;
-    pointer-events: none;
+    cursor: pointer;
     white-space: pre;
 }
 
@@ -235,10 +235,19 @@ body {
     color: var(--accent-yellow);
 }
 
-/* Comando sugerido pelo "did you mean" */
-.command-hint {
+/* Nome de comando tocável na saída (help, "did you mean", lista do Tab) */
+.cmd-link {
     color: var(--command-blue);
     font-weight: bold;
+    cursor: pointer;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.cmd-link:hover,
+.cmd-link:active {
+    color: var(--accent-yellow);
 }
 
 /* Idioma atual, no canto direito do header */

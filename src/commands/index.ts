@@ -26,8 +26,15 @@ export const COMMAND_NAMES = [
     'clear',
 ] as const
 
+/**
+ * Nome de comando tocável na saída do terminal. O Terminal intercepta o
+ * clique via `data-cmd` e só executa nomes presentes em `COMMAND_NAMES`.
+ */
+export const commandLink = (name: string) =>
+    `<span class="cmd-link" data-cmd="${name}">${name}</span>`
+
 const helpText = (label: string) =>
-    `<span class="label">${label}</span> ${COMMAND_NAMES.join(', ')}`
+    `<span class="label">${label}</span> ${COMMAND_NAMES.map(commandLink).join(', ')}`
 
 export const commandsPt: Commands = {
     help: () => helpText('Comandos disponíveis:'),
