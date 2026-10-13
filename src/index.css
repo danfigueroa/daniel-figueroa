@@ -192,6 +192,12 @@ body {
 }
 
 /* Tab e setas não existem em touch: a dica só atrapalharia */
+/* Stack em destaque logo abaixo do nome, visível em qualquer dispositivo */
+.intro-focus {
+    opacity: 0.5;
+    font-size: 0.85em;
+}
+
 /* Cada tipo de dispositivo vê só a dica que consegue usar */
 .touch-hint-line {
     display: none;

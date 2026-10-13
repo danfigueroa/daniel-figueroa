@@ -85,7 +85,7 @@ const buildWelcomeLines = (lang: Language): Line[] => {
             isSystem: true,
         },
         {
-            content: `<span class="hint-line">${t.focus}</span>`,
+            content: `<span class="intro-focus">${t.focus}</span>`,
             id: 'focus-1',
             isHtml: true,
             isSystem: true,
