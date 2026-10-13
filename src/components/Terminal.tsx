@@ -121,6 +121,28 @@ export const Terminal: React.FC = () => {
         }
     }, [history])
 
+    // No celular o teclado virtual encolhe a área visível sem mudar o `vh`.
+    // Expor a altura real em --vvh mantém o prompt e a barra de teclas logo
+    // acima do teclado.
+    useEffect(() => {
+        const viewport = window.visualViewport
+        if (!viewport) return
+
+        const update = () => {
+            document.documentElement.style.setProperty(
+                '--vvh',
+                `${viewport.height}px`
+            )
+            if (containerRef.current) {
+                containerRef.current.scrollTop = containerRef.current.scrollHeight
+            }
+        }
+
+        update()
+        viewport.addEventListener('resize', update)
+        return () => viewport.removeEventListener('resize', update)
+    }, [])
+
     // Sugestão inline: primeiro comando que casa com o que já foi digitado.
     // Derivado do render, não guardado em estado.
     const trimmedInput = currentInput.trim()
@@ -476,6 +498,7 @@ export const Terminal: React.FC = () => {
                         autoComplete="off"
                         autoCorrect="off"
                         spellCheck="false"
+                        enterKeyHint="go"
                     />
                 </div>
             </div>
