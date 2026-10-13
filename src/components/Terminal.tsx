@@ -208,7 +208,7 @@ export const Terminal: React.FC = () => {
         if (commandHistory.length > 0 && historyIndex < commandHistory.length - 1) {
             const newIndex = historyIndex + 1
             setHistoryIndex(newIndex)
-            setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
+            setCurrentInput(commandHistory[newIndex])
         }
     }
 
@@ -216,7 +216,7 @@ export const Terminal: React.FC = () => {
         if (historyIndex > 0) {
             const newIndex = historyIndex - 1
             setHistoryIndex(newIndex)
-            setCurrentInput(commandHistory[commandHistory.length - 1 - newIndex])
+            setCurrentInput(commandHistory[newIndex])
         } else if (historyIndex === 0) {
             setHistoryIndex(-1)
             setCurrentInput('')
